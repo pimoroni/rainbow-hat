@@ -19,6 +19,14 @@ GPIO.setup(BUZZER, GPIO.IN)
 pwm.start(50)
 
 def note(frequency, duration, duty=0.5):
+    """Queue a note to play on the buzzer.
+
+    :param frequency: Note frequency in hertz
+    :param duration: Note duration in seconds, including pause afterwards
+    :param duty: Amount of duration to play note vs pause
+
+    """
+
     if duration <= 0:
         raise ValueError("Duration must be > 0")
     if frequency <= 0 and frequency is not None:
