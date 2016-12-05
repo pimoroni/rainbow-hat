@@ -1,60 +1,95 @@
 import RPi.GPIO as GPIO
 
 
-A = 21
-B = 20
-C = 16
+PIN_A = 21
+PIN_B = 20
+PIN_C = 16
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup([A, B, C], GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-_buttons = {}
-_button_press = {}
-_button_release = {}
+class Button:
+    def __init__(self, index, gpio_pin):
+        self.pressed = False
+        self._on_press_handler = None
+        self._on_release_handler = None
+        self._gpio_pin = gpio_pin
+        self._index = index
+        GPIO.setup(self._gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.add_event_detect(self._gpio_pin, GPIO.BOTH, callback=self._handle_button)
 
-def _handle_button(pin):
-    _buttons[pin] = GPIO.input(pin) != GPIO.HIGH
+    def _handle_button(self, pin):
+        self.pressed = GPIO.input(pin) != GPIO.HIGH
 
-    try:
-        if _buttons[pin]: # Touch
-            _button_press[pin](pin)
-        else: # Release
-            _button_release[pin](pin)
+        if self.pressed and callable(self._on_press_handler):
+            try:
+                self._on_press_handler(self._index, self._gpio_pin)
+            except TypeError:
+                self._on_press_handler(self._index)
 
-    except KeyError:
-        pass
+        elif callable(self._on_release_handler):
+            try:
+                self._on_release_handler(self._index, self._gpio_pin)
+            except TypeError:
+                self._on_release_handler(self._index)
 
-def _assign_handler(target, button, handler):
-    if button is None:
-        target[A] = handler
-        target[B] = handler
-        target[C] = handler
+    def press(self, handler=None):
+        """Bind a function to handle touch press."""
 
-    target[button] = handler
+        if handler is None:
+            def decorate(handler):
+                self._on_press_handler = handler
 
-def on_touch(button=None, handler=None):
-    global _button_press
+            return decorate
 
-    if handler is None:
-        def decorate(handler):
-            global _button_press
-            _assign_handler(_button_press, button, handler)
+        self._on_press_handler = handler
 
-        return decorate
+    def release(self, handler=None):
+        """Bind a funciton to handle touch release."""
 
-    _assign_handler(_button_press, button, handler)
+        if handler is None:
+            def decorate(handler):
+                self._on_release_handler = handler
 
-def on_release(button=None, handler=None):
-    global _button_release
+            return decorate
 
-    if handler is None:
-        def decorate(handler):
-            global _button_release
-            _assign_handler(_button_release, button, handler)
+        self._on_release_handler = handler
 
-        return decorate
+class Buttons:
+    A = Button(0, PIN_A)
+    B = Button(1, PIN_B)
+    C = Button(2, PIN_C)
 
-    _assign_handler(_button_release, button, handler)
+    _all = [A, B, C]
 
-for btn in [A, B, C]:
-    GPIO.add_event_detect(btn, GPIO.BOTH, callback=_handle_button)
+    def __getitem__(self, key):
+        return self._all[key]
+
+    def press(self, handler=None):
+        if handler is None:
+            def decorate(handler):
+                self.A.press(handler)
+                self.B.press(handler)
+                self.C.press(handler)
+
+            return decorate
+
+        self.A.press(handler)
+        self.B.press(handler)
+        self.C.press(handler)
+
+    def release(self, handler=None):
+        if handler is None:
+            def decorate(handler):
+                self.A.release(handler)
+                self.B.release(handler)
+                self.C.release(handler)
+
+            return decorate
+
+        self.A.release(handler)
+        self.B.release(handler)
+        self.C.release(handler)
+
+
+Buttons = Buttons()
+

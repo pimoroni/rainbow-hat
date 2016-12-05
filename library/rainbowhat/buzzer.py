@@ -29,7 +29,7 @@ def note(frequency, duration, duty=0.5):
 
     if duration <= 0:
         raise ValueError("Duration must be > 0")
-    if frequency <= 0 and frequency is not None:
+    if frequency is not None and frequency <= 0:
         raise ValueError("Frequency must be > 0")
 
     _note_queue.append((frequency, duration, duty))
