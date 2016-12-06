@@ -72,6 +72,7 @@ while True:
     if inputs[A]:
         mode += 1
         mode %= 3
+        rainbowhat.buzzer.note(880,0.1)
 
     if inputs[B]:
         values[mode][1] -= int(speeds[B])
@@ -90,6 +91,7 @@ while True:
         values[mode][1] = 255
 
     if values[mode][1] < 0:
+        rainbowhat.buzzer.note(440,0.1)
         values[mode][1] = 0
 
     # Get the name and value of the current channel
