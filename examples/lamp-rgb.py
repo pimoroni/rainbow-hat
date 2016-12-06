@@ -5,15 +5,56 @@ import time
 
 import rainbowhat
 
+print("""Lamp: RGB Edition
+
+Control the colour of the rainbow by adjusting the Red, Green and Blue
+channels separately.
+
+Tap button A to pick which channel to adjust.
+
+Tap button B to lower that colour's brightness.
+
+Tap button C to raise that colour's brightness.
+
+Press Ctrl+C to exit!
+
+""")
+
 BRIGHTNESS = 0.1
 A = 0
 B = 1
 C = 2
 
-r, g, b = (0, 0, 0)
+values = [['R',0], ['G',0], ['B',0]]
+
+mode = 0
+
 show = "RGB"
 
+# Store the state of the inputs
 inputs = [False, False, False]
+
+# Store the speed to increment colour
+speeds = [0, 1, 1]
+
+# Introduce each button and its feature
+
+rainbowhat.lights.rgb(1,0,0)
+rainbowhat.display.print_str("Chan")
+rainbowhat.display.show()
+time.sleep(1.0)
+
+rainbowhat.lights.rgb(0,1,0)
+rainbowhat.display.print_str("Less")
+rainbowhat.display.show()
+time.sleep(1.0)
+
+rainbowhat.lights.rgb(0,0,1)
+rainbowhat.display.print_str("More")
+rainbowhat.display.show()
+time.sleep(1.0)
+
+rainbowhat.lights.rgb(0,0,0)
 
 @rainbowhat.touch.press()
 def touch_press(channel):
@@ -29,18 +70,34 @@ def touch_release(channel):
 
 while True:
     if inputs[A]:
-        r += 1
-        show = "R{}".format(r)
+        mode += 1
+        mode %= 3
 
     if inputs[B]:
-        g += 1
-        show = "G{}".format(g)
+        values[mode][1] -= int(speeds[B])
+        speeds[B] += 0.5 # Ramp the speed up slightly
+    else:
+        speeds[B] = 1 # Reset speed if button is release
 
     if inputs[C]:
-        b += 1
-        show = "B{}".format(b)
+        values[mode][1] += int(speeds[C])
+        speeds[C] += 0.5
+    else:
+        speeds[C] = 1
 
-    r, g, b = [x % 255 for x in (r, g, b)]
+     # Clamp to 0 to 255
+    if values[mode][1] > 255:
+        values[mode][1] = 255
+
+    if values[mode][1] < 0:
+        values[mode][1] = 0
+
+    # Get the name and value of the current channel
+    name, value = values[mode]
+    show = "{name}{value}".format(name=name, value=value)
+
+    # Grab the rgb values from the values list
+    r, g, b = [x[1] for x in values]
 
     rainbowhat.display.clear()
     rainbowhat.display.print_str(show, justify_right=False)
@@ -49,5 +106,8 @@ while True:
     rainbowhat.rainbow.set_all(r, g, b, brightness=BRIGHTNESS)
     rainbowhat.rainbow.show()
 
-    time.sleep(0.05)
+    if inputs[A]: # Add a slight delay to prevent flipping through mode too quickly
+        time.sleep(0.5)
+    else:
+        time.sleep(0.1)
    
