@@ -1,15 +1,10 @@
-import RPi.GPIO as GPIO
-import time
-import threading
-import atexit
+from threading import Timer
 
+import RPi.GPIO as GPIO
 
 BUZZER = 13
 
-
-_running = True
-_t = None
-_note_queue = []
+_timeout = None
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(BUZZER, GPIO.OUT)
@@ -18,51 +13,29 @@ pwm = GPIO.PWM(BUZZER, 1)
 GPIO.setup(BUZZER, GPIO.IN)
 pwm.start(50)
 
-def note(frequency, duration, duty=0.5):
-    """Queue a note to play on the buzzer.
+def note(frequency, duration=1.0):
+    global _timeout
 
-    :param frequency: Note frequency in hertz
-    :param duration: Note duration in seconds, including pause afterwards
-    :param duty: Amount of duration to play note vs pause
-
-    """
-
-    if duration <= 0:
-        raise ValueError("Duration must be > 0")
-    if frequency is not None and frequency <= 0:
+    if frequency <= 0:
         raise ValueError("Frequency must be > 0")
 
-    _note_queue.append((frequency, duration, duty))
+    clear_timeout()
 
-def _run():
-    global _running, _note_queue
+    pwm.ChangeFrequency(frequency)
+    GPIO.setup(BUZZER, GPIO.OUT)
+    
+    _timeout = Timer(duration, stop)
+    _timeout.start()
 
-    _running = True
+def clear_timeout():
+    global _timeout
 
-    while _running:
-        try:
-            frequency, duration, duty = _note_queue.pop(0)
-            if frequency is None:
-                time.sleep(duration)
-                continue
+    if _timeout is not None:
+        _timeout.cancel()
+        _timeout = None
 
-            pwm.ChangeFrequency(frequency)
-            GPIO.setup(BUZZER, GPIO.OUT)
-            time.sleep(duration * duty)
-            GPIO.setup(BUZZER, GPIO.IN)
-            time.sleep(duration - (duration * duty))
-        except IndexError:
-            time.sleep(0.001)
+def stop():
+    clear_timeout()
 
-def _stop():
-    global _running, _t
-
-    _running = False
-    if _t is not None:
-        _t.join()
-
-atexit.register(_stop)
-_t = threading.Thread(target=_run)
-_t.daemon = True
-_t.start()
+    GPIO.setup(BUZZER, GPIO.IN)
 

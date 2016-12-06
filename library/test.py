@@ -41,7 +41,7 @@ def test(index):
     rainbowhat.rainbow.show()
     rainbowhat.display.print_str(text)
     rainbowhat.display.show()
-    rainbowhat.buzzer.note(note,0.30,0.8)
+    rainbowhat.buzzer.note(note,0.30)
 
 @rainbowhat.touch.release()
 def test(index):
@@ -57,16 +57,18 @@ while True:
 
     if counts[0] == 2 and counts[1] == 2 and counts[2] == 2:
         for x in [d,e,f,g,a,b,c]:
-            rainbowhat.buzzer.note(x,0.1,0.5)
+            rainbowhat.buzzer.note(x,0.1)
+            time.sleep(0.2)
+
         rainbowhat.display.print_str("OKAY")
         rainbowhat.display.show()
-        time.sleep(0.7)
         break
 
     if time.time() - start > TIMEOUT:
         for x in [c,b,a,g,f,e,d]:
-            rainbowhat.buzzer.note(x,0.1,0.5)
+            rainbowhat.buzzer.note(x,0.1)
+            time.sleep(0.2)
+
         rainbowhat.display.print_str("FAIL")
         rainbowhat.display.show()
-        time.sleep(0.7)
         break
