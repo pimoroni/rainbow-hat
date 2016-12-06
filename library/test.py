@@ -1,6 +1,8 @@
 import rainbowhat
 import time
 
+TIMEOUT = 4 # Timeout in MS
+
 rgb = [100,0,0]
 
 #c = 261
@@ -13,18 +15,27 @@ b = 493
 c = 523
 
 states = [
-    [100,0,0, "Reed", a],
-    [0,100,0, "Gren", b],
-    [0,0,100, "Blue", c]
+    [10,0,0, "Reed", a],
+    [0,10,0, "Gren", b],
+    [0,0,10, "Blue", c]
 ]
+
+counts = [0,0,0]
 
 #for note in [a,a,g,g,a,a,g,None,f,f,e,e,d,d,c,None,g,g,f,f,e,e,d,None,c,c,g,g,a,a,g,None,f,f,e,e,d,d,c,None]:
 #    rainbowhat.buzzer.note(note,0.3,0.9)
 
 @rainbowhat.touch.press()
 def test(index):
-    print("Touch:", index)
+    temp = rainbowhat.weather.temperature()
+    pres = rainbowhat.weather.pressure()
+
+    print("Touch: {}, Temp: {}, Pres: {}".format(index, temp, pres))
+
     r, g, b, text, note = states[index]
+
+    counts[index] += 1
+
     rainbowhat.lights.rgb(r, g, b)
     rainbowhat.rainbow.set_all(r, g, b)
     rainbowhat.rainbow.show()
@@ -36,14 +47,26 @@ def test(index):
 def test(index):
     print("Release:", index)
 
-while True:
-    time.sleep(1)
-    continue
+rainbowhat.display.print_float(rainbowhat.weather.temperature())
+rainbowhat.display.show()
 
-    r, g, b = rgb
-    print(r, g, b)
-    rainbowhat.apa102.set_all(r, g, b)
-    rainbowhat.apa102.show()
-    rainbowhat.lights.rgb(r, g, b)
-    rgb.insert(0,rgb.pop())
-    time.sleep(0.5)
+start = time.time()
+
+while True:
+    time.sleep(0.01)
+
+    if counts[0] == 2 and counts[1] == 2 and counts[2] == 2:
+        for x in [d,e,f,g,a,b,c]:
+            rainbowhat.buzzer.note(x,0.1,0.5)
+        rainbowhat.display.print_str("OKAY")
+        rainbowhat.display.show()
+        time.sleep(0.7)
+        break
+
+    if time.time() - start > TIMEOUT:
+        for x in [c,b,a,g,f,e,d]:
+            rainbowhat.buzzer.note(x,0.1,0.5)
+        rainbowhat.display.print_str("FAIL")
+        rainbowhat.display.show()
+        time.sleep(0.7)
+        break
