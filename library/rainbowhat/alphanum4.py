@@ -125,14 +125,22 @@ class AlphaNum4(HT16K33.HT16K33):
     """Alphanumeric 14 segment LED backpack display."""
 
     def __init__(self, **kwargs):
-        """Initialize display.  All arguments will be passed to the HT16K33 class
-        initializer, including optional I2C address and bus number parameters.
+        """Initialize display.
+
+        All arguments will be passed to the HT16K33 class initializer,
+        including optional I2C address and bus number parameters.
+
         """
+
         super(AlphaNum4, self).__init__(**kwargs)
 
     def set_digit_raw(self, pos, bitmask):
-        """Set digit at position to raw bitmask value.  Position should be a value
-        of 0 to 3 with 0 being the left most digit on the display."""
+        """Set digit at position to raw bitmask value.
+
+        Position should be a value of 0 to 3 with 0 being the left most digit on the display.
+
+        """
+
         if pos < 0 or pos > 3:
             # Ignore out of bounds digits.
             return
@@ -142,10 +150,13 @@ class AlphaNum4(HT16K33.HT16K33):
         self.buffer[pos*2+1] = (bitmask >> 8) & 0xFF
 
     def set_decimal(self, pos, decimal):
-        """Turn decimal point on or off at provided position.  Position should be
-        a value 0 to 3 with 0 being the left most digit on the display.  Decimal
-        should be True to turn on the decimal point and False to turn it off.
+        """Turn decimal point on or off at provided position.
+
+        Position should be a value 0 to 3 with 0 being the left most digit on the display.
+        Decimal should be True to turn on the decimal point and False to turn it off.
+
         """
+
         if pos < 0 or pos > 3:
             # Ignore out of bounds digits.
             return
@@ -156,18 +167,24 @@ class AlphaNum4(HT16K33.HT16K33):
             self.buffer[pos*2+1] &= ~(1 << 6)
 
     def set_digit(self, pos, digit, decimal=False):
-        """Set digit at position to provided value.  Position should be a value
-        of 0 to 3 with 0 being the left most digit on the display.  Digit should
-        be any ASCII value 32-127 (printable ASCII).
+        """Set digit at position to provided value.
+
+        Position should be a value of 0 to 3 with 0 being the left most digit on the display.
+        Digit should be any ASCII value 32-127 (printable ASCII).
+
         """
+
         self.set_digit_raw(pos, DIGIT_VALUES.get(str(digit), 0x00))
         if decimal:
             self.set_decimal(pos, True)
 
     def print_str(self, value, justify_right=True):
-        """Print a 4 character long string of values to the display. Characters
-        in the string should be any ASCII value 32 to 127 (printable ASCII).
+        """Print a 4 character long string of values to the display.
+
+        Characters in the string should be any ASCII value 32 to 127 (printable ASCII).
+
         """
+
         # Calculcate starting position of digits based on justification.
         pos = (4-len(value)) if justify_right else 0
         # Go through each character and print it on the display.
@@ -175,10 +192,13 @@ class AlphaNum4(HT16K33.HT16K33):
             self.set_digit(i+pos, ch)
 
     def print_number_str(self, value, justify_right=True):
-        """Print a 4 character long string of numeric values to the display. This
-        function is similar to print_str but will interpret periods not as
+        """Print a 4 character long string of numeric values to the display.
+
+        This function is similar to print_str but will interpret periods not as
         characters but as decimal points associated with the previous character.
+
         """
+
         # Calculate length of value without decimals.
         length = len(value.translate(None, '.'))
         # Error if value without decimals is longer than 4 characters.
@@ -197,21 +217,30 @@ class AlphaNum4(HT16K33.HT16K33):
                 pos += 1
 
     def print_float(self, value, decimal_digits=2, justify_right=True):
-        """Print a numeric value to the display.  If value is negative
-        it will be printed with a leading minus sign.  Decimal digits is the
-        desired number of digits after the decimal point.
+        """Print a numeric value to the display.
+
+        If value is negative it will be printed with a leading minus sign.
+        Decimal digits is the desired number of digits after the decimal point.
+
         """
+
         format_string = '{{0:0.{0}F}}'.format(decimal_digits)
         self.print_number_str(format_string.format(value), justify_right)
 
     def print_hex(self, value, justify_right=True):
-        """Print a numeric value in hexadecimal.  Value should be from 0 to FFFF.
+        """Print a numeric value in hexadecimal.
+
+        Value should be from 0 to FFFF.
+
         """
+
         if value < 0 or value > 0xFFFF:
             # Ignore out of range values.
             return
         self.print_str('{0:X}'.format(value), justify_right)
 
     def show(self):
+        """Display buffer on display."""
+
         self.write_display()
 
