@@ -48,6 +48,9 @@ A     | BCM#21
 B     | BCM#20
 C     | BCM#16
 
+Only one touch can be registered at a time, and a touch will time out after
+being continually held for more than about 30 seconds.
+
 ## 3 LEDs, Red, Green and Blue via GPIO
 
 The 3 LEDs are connected to the following GPIO pins.
