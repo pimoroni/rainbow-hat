@@ -47,8 +47,29 @@ def test(index):
 def test(index):
     print("Release:", index)
 
+msg = ('I/-\\I/-\\O' * 2) + str(rainbowhat.weather.temperature())
+offset = 0
+
+def text():
+    global offset
+
+    rainbowhat.display.clear()
+    rainbowhat.display.print_str(msg[offset:offset+4])
+    rainbowhat.display.write_display()
+
+    offset += 1
+    if offset > len(msg) - 4:
+        offset = 0
+
+for x in range(len(msg)-4):
+    text()
+    time.sleep(0.1)
+
 rainbowhat.display.print_float(rainbowhat.weather.temperature())
 rainbowhat.display.show()
+
+
+
 
 start = time.time()
 
@@ -56,10 +77,6 @@ while True:
     time.sleep(0.01)
 
     if counts[0] == 2 and counts[1] == 2 and counts[2] == 2:
-        for x in [d,e,f,g,a,b,c]:
-            rainbowhat.buzzer.note(x,0.1)
-            time.sleep(0.2)
-
         rainbowhat.display.print_str("OKAY")
         rainbowhat.display.show()
         break

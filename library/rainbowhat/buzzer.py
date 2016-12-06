@@ -27,7 +27,7 @@ def note(frequency, duration=1.0):
     pwm.ChangeFrequency(frequency)
     GPIO.setup(BUZZER, GPIO.OUT)    
 
-    if duration is not None and duraton > 0:
+    if duration is not None and duration > 0:
         _timeout = Timer(duration, stop)
         _timeout.start()
 
