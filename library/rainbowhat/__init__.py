@@ -8,6 +8,8 @@ from . import buzzer
 
 display = AlphaNum4(i2c=bus)
 display.begin()
+display.clear()
+display.show()
 
 touch = Buttons
 lights = Lights

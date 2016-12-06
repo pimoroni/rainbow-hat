@@ -15,7 +15,7 @@ class Button:
         self._gpio_pin = gpio_pin
         self._index = index
         GPIO.setup(self._gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(self._gpio_pin, GPIO.BOTH, callback=self._handle_button)
+        GPIO.add_event_detect(self._gpio_pin, GPIO.BOTH, bouncetime=1, callback=self._handle_button)
 
     def _handle_button(self, pin):
         self.pressed = GPIO.input(pin) != GPIO.HIGH
