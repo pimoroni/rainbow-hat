@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python
 
 import signal
 
@@ -19,5 +19,10 @@ def touch_b(channel):
 def touch_c(channel):
     print("Button C touched!")
     rainbowhat.lights.rgb(0,0,1)
+
+@rainbowhat.touch.release()
+def release(channel):
+    print("Button release!")
+    rainbowhat.lights.rgb(0,0,0)
 
 signal.pause() # Pause the main thread so it doesn't exit
