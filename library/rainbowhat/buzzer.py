@@ -19,13 +19,17 @@ def note(frequency, duration=1.0):
     if frequency <= 0:
         raise ValueError("Frequency must be > 0")
 
+    if duration is not None and duration <= 0:
+        raise ValueError("Duration must be > 0")
+
     clear_timeout()
 
     pwm.ChangeFrequency(frequency)
-    GPIO.setup(BUZZER, GPIO.OUT)
-    
-    _timeout = Timer(duration, stop)
-    _timeout.start()
+    GPIO.setup(BUZZER, GPIO.OUT)    
+
+    if duration is not None and duraton > 0:
+        _timeout = Timer(duration, stop)
+        _timeout.start()
 
 def clear_timeout():
     global _timeout
