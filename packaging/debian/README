@@ -1,0 +1,6 @@
+README
+
+Rainbow HAT is fun and flexible with plenty of scope for interesting projects. 
+
+Learn more: https://shop.pimoroni.com/products/rainbow-hat
+For examples run: `curl -sS get.pimoroni.com/rainbowhat | bash`

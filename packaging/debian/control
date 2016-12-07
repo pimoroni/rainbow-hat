@@ -1,0 +1,29 @@
+Source: rainbowhat
+Maintainer: Phil Howard <phil@pimoroni.com>
+Homepage: https://github.com/pimoroni/rainbow-hat
+Section: python
+Priority: extra
+Build-Depends: debhelper (>= 9.0.0), dh-python, python-all (>= 2.7), python-setuptools, python3-all (>= 3.4), python3-setuptools
+Standards-Version: 3.9.6
+X-Python-Version: >= 2.7
+X-Python3-Version: >= 3.4
+
+Package: python-rainbowhat
+Architecture: all
+Section: python
+Depends: ${misc:Depends}, ${python:Depends}
+Suggests:
+Description: python library designed to control Rainbow HAT
+ Ideal for exploring protocols and devices on the Raspberry Pi.
+ .
+ This is the Python 2 version of the package.
+
+Package: python3-rainbowhat
+Architecture: all
+Section: python
+Depends: ${misc:Depends}, ${python3:Depends}
+Suggests:
+Description: python library designed to control Rainbow HAT
+ Ideal for explorer protocols and devices on the Raspberry Pi.
+ .
+ This is the Python 3 version of the package.
