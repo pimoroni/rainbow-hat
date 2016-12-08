@@ -6,6 +6,9 @@ from .touch import Buttons
 from .lights import Lights
 from . import buzzer
 
+
+__version__ = '0.0.1'
+
 display = AlphaNum4(i2c=bus)
 display.begin()
 display.clear()
