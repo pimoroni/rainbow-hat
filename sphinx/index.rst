@@ -5,19 +5,25 @@
    :titlesonly:
    :maxdepth: 0
 
-
 .. module:: rainbowhat
 
 Welcome
 -------
 
-This documentation will guide you through the methods available in the Drum HAT python library.
+This documentation will guide you through the methods available in the Rainbow HAT python library.
 
-Drum HAT is a musical Raspberry Pi add-on with 8 capacitive-touch drum pads.
+Rainbow HAT is a Raspberry Pi add-on designed for Android Things, it includes:
 
-* More information - https://shop.pimoroni.com/products/drum-hat
-* GPIO Pinout - http://pinout.xyz/pinout/drum_hat
-* Get the code - https://github.com/pimoroni/drum-hat
+* 3 capacitive touch buttons
+* 3 LEDs: Red, Green and Blue
+* 7 RGB LEDs (APA102)
+* A four-character "star" display
+* A temperature/pressure sensor
+
+
+* More information - https://shop.pimoroni.com/products/rainbow-hat
+* GPIO Pinout - http://pinout.xyz/pinout/rainbow_hat
+* Get the code - https://github.com/pimoroni/rainbow-hat
 * Get help - http://forums.pimoroni.com/c/support
 
 At A Glance
@@ -40,3 +46,8 @@ At A Glance
 .. automethodoutline:: weather.altitude
 .. automethodoutline:: weather.update
 
+.. autoclass:: Lights
+   :members:
+
+.. autoclass:: touch
+   :members:
