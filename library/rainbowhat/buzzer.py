@@ -43,6 +43,20 @@ def note(frequency, duration=1.0):
         _timeout = Timer(duration, stop)
         _timeout.start()
 
+def midi_note(note_number, duration=1.0):
+    """Play a single note by midi note number.
+
+    Converts a midi note number into a frequency and plays it. A5 is 69.
+
+    :param note_number: Midi note number of note
+    :param duration: Optional duration in seconds, use None to sustain note
+
+    """
+
+    freq = (2**((note_number-69.0)/12)) * 440
+
+    note(freq, duration)
+
 def clear_timeout():
     """Clear any note timeout set.
 
