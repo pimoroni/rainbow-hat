@@ -11,8 +11,8 @@ X-Python3-Version: >= 3.4
 Package: python-rainbowhat
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python:Depends}
-Suggests:
+Depends: ${misc:Depends}, ${python:Depends}, python-rpi.gpio, python-smbus
+Suggests: python-numpy
 Description: python library designed to control Rainbow HAT
  Ideal for exploring protocols and devices on the Raspberry Pi.
  .
@@ -21,8 +21,8 @@ Description: python library designed to control Rainbow HAT
 Package: python3-rainbowhat
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python3:Depends}
-Suggests:
+Depends: ${misc:Depends}, ${python3:Depends}, python3-rpi.gpio, python3-smbus
+Suggests: python3-numpy
 Description: python library designed to control Rainbow HAT
  Ideal for explorer protocols and devices on the Raspberry Pi.
  .

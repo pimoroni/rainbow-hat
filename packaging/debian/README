@@ -1,6 +1,6 @@
 README
 
-Rainbow HAT is fun and flexible with plenty of scope for interesting projects. 
+Rainbow HAT is ideal for exploring protocols and devices on the Raspberry Pi. It features displays, sensors, sound, and LEDs - plenty of scope for interesting projects!
 
-Learn more: https://shop.pimoroni.com/products/rainbow-hat
-For examples run: `curl -sS get.pimoroni.com/rainbowhat | bash`
+Learn more: https://shop.pimoroni.com/products/rainbow-hat-for-android-things
+For examples run: `curl -sS https://get.pimoroni.com/rainbowhat | bash`
