@@ -17,9 +17,6 @@ pixels = [[0,0,0,BRIGHTNESS]] * NUM_PIXELS
 _gpio_setup = False
 _clear_on_exit = True
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-
 def _exit():
     if _clear_on_exit:
         clear()
