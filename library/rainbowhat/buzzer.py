@@ -1,12 +1,17 @@
 from threading import Timer
 
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
+
 
 BUZZER = 13
 
 _timeout = None
 
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 GPIO.setup(BUZZER, GPIO.OUT)
 
 # Set up the PWM and then set the pin to input

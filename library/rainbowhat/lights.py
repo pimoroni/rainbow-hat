@@ -1,4 +1,7 @@
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
 
 
 RED = 6
@@ -6,6 +9,7 @@ GREEN = 19
 BLUE = 26
 
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
 class Light:
     def __init__(self, gpio_pin):
