@@ -1,4 +1,7 @@
-import RPi.GPIO as GPIO
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
 
 
 PIN_A = 21
@@ -6,6 +9,7 @@ PIN_B = 20
 PIN_C = 16
 
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
 class Button:
     def __init__(self, index, gpio_pin):
