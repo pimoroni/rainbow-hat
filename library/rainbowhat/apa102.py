@@ -62,7 +62,7 @@ def _sof():
         GPIO.output(CLK, 0)
 
 def show():
-    """Output the buffer to Blinkt!"""
+    """Output the buffer"""
     global _gpio_setup
 
     if not _gpio_setup:
@@ -119,11 +119,11 @@ def set_pixel(x, r, g, b, brightness=None):
     pixels[x] = [int(r) & 0xff,int(g) & 0xff,int(b) & 0xff,brightness]
 
 def set_clear_on_exit(value=True):
-    """Set whether Blinkt! should be cleared upon exit
+    """Set whether the APA102 should be cleared upon exit
 
-    By default Blinkt! will turn off the pixels on exit, but calling::
+    By default the APA102 will turn off the pixels on exit, but calling::
 
-        blinkt.set_clear_on_exit(False)
+        set_clear_on_exit(False)
 
     Will ensure that it does not.
 

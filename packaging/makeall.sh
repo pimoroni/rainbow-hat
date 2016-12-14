@@ -4,6 +4,10 @@
 
 reponame="" # leave this blank for auto-detection
 libname="" # leave this blank for auto-detection
+packagename="" # leave this blank for auto-selection
+
+rpigpio="yes" # set to 'no' to turn off warning
+smbus="yes" # set to 'no' to turn off warning
 
 debianlog="debian/changelog"
 debcontrol="debian/control"
@@ -51,15 +55,21 @@ if [ -z "$reponame" ]; then
         repodir="$rootdir"
         reponame="$(basename $repodir)"
     fi
+    reponame=$(echo "$reponame" | tr "[A-Z]" "[a-z]")
 fi
 
 if [ -z "$libname" ]; then
     cd "$libdir"
     libname=$(grep "name" setup.py | tr -d "[:space:]" | cut -c 7- | rev | cut -c 3- | rev)
-    cd "$debdir"
+    libname=$(echo "$libname" | tr "[A-Z]" "[a-z]") && cd "$debdir"
+fi
+
+if [ -z "$packagename" ]; then
+    packagename="$libname"
 fi
 
 echo "reponame is $reponame and libname is $libname"
+echo "output packages will be python-$packagename and python3-$packagename"
 
 # checking generating changelog file
 
@@ -82,11 +92,11 @@ fi
 
 inform "checking debian/copyright file..."
 
-if ! grep "^Source" $debcopyright | grep "$libname" $debcopyright &> /dev/null; then
+if ! grep "^Source" $debcopyright | grep "$reponame" &> /dev/null; then
     warning "$(grep "^Source" $debcopyright)" && FLAG=true
 fi
 
-if ! grep "^Upstream-Name" $debcopyright | grep "$libname" $debcopyright &> /dev/null; then
+if ! grep "^Upstream-Name" $debcopyright | grep "$libname" &> /dev/null; then
     warning "$(grep "^Upstream-Name" $debcopyright)" && FLAG=true
 fi
 
@@ -94,19 +104,19 @@ fi
 
 inform "checking debian/control file..."
 
-if ! grep "^Source" $debcontrol | grep "$libname" $debcontrol &> /dev/null; then
+if ! grep "^Source" $debcontrol | grep "$libname" &> /dev/null; then
     warning "$(grep "^Source" $debcontrol)" && FLAG=true
 fi
 
-if ! grep "^Homepage" $debcontrol | grep "$reponame" $debcontrol &> /dev/null; then
+if ! grep "^Homepage" $debcontrol | grep "$reponame" &> /dev/null; then
     warning "$(grep "^Homepage" $debcontrol)" && FLAG=true
 fi
 
-if ! grep "^Package: python-$libname" $debcontrol &> /dev/null; then
+if ! grep "^Package: python-$packagename" $debcontrol &> /dev/null; then
     warning "$(grep "^Package: python-" $debcontrol)" && FLAG=true
 fi
 
-if ! grep "^Package: python3-$libname" $debcontrol &> /dev/null; then
+if ! grep "^Package: python3-$packagename" $debcontrol &> /dev/null; then
     warning "$(grep "^Package: python3-" $debcontrol)" && FLAG=true
 fi
 
@@ -114,16 +124,23 @@ if ! grep "^Priority: extra" $debcontrol &> /dev/null; then
     warning "$(grep "^Priority" $debcontrol)" && FLAG=true
 fi
 
+if [ $rpigpio == "yes" ] && ! grep "rpi.gpio" $debcontrol &> /dev/null; then
+    warning "if this library does not depend on rpi.gpio change 'rpigpio' variable!" && FLAG=true
+fi
+
+if [ $smbus == "yes" ] && ! grep "smbus" $debcontrol &> /dev/null; then
+    warning "if this library does not depend on smbus change the 'smbus' variable!" && FLAG=true
+fi
 
 # checking debian/rules file
 
 inform "checking debian/rules file..."
 
-if ! grep "debian/python-$libname" $debrules &> /dev/null; then
+if ! grep "debian/python-$packagename" $debrules &> /dev/null; then
     warning "$(grep "debian/python-" $debrules)" && FLAG=true
 fi
 
-if ! grep "debian/python3-$libname" $debrules &> /dev/null; then
+if ! grep "debian/python3-$packagename" $debrules &> /dev/null; then
     warning "$(grep "debian/python3-" $debrules)" && FLAG=true
 fi
 
