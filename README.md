@@ -1,10 +1,10 @@
 ![Rainbow HAT](rainbowhatpimoroni.png)
 
-AndroidThings Rainbow HAT is a flexible IO exploration board with multiple devices covering i2c, SPI, generic GPIO.
+Rainbow HAT is a flexible IO exploration board with multiple devices covering i2c, SPI, generic GPIO.
 
-#Python Library
+This repository contains the Pimoroni Python driver for Rainbow HAT, for use with Raspbiban on your Raspberry Pi.
 
-This Python Library is supplied to get you up and running on Raspbian on your Raspberry Pi.
+For the official AndroidThings driver see: https://github.com/androidthings/contrib-drivers/tree/master/rainbowhat
 
 ##Installation
 
