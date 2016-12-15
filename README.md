@@ -8,10 +8,16 @@ For the official AndroidThings driver see: https://github.com/androidthings/cont
 
 ##Installation
 
-Our usual one-line installer to follow, but for now you can download and install Rainbow HAT for Python like so:
+**Full install ( recommended ):**
 
+We've created a super-easy installation script that will install all pre-requisites and get your Rainbow HAT up and running in a jiffy. To run it fire up Terminal which you'll find in Menu -> Accessories -> Terminal on your Raspberry Pi desktop like so:
+
+![Finding the terminal](terminal.jpg)
+
+In the new terminal window type:
+
+```bash
+curl -sS https://get.pimoroni.com/rainbowhat | bash
 ```
-git clone https://github.com/pimoroni/rainbow-hat
-cd rainbow-hat/library
-sudo python setup.py install
-```
+
+If you choose to download examples you'll find them in `/home/pi/Pimoroni/rainbowhat`.
