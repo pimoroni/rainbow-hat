@@ -46,7 +46,7 @@ At A Glance
 .. automethodoutline:: weather.altitude
 .. automethodoutline:: weather.update
 
-.. autoclass:: Lights
+.. autoclass:: lights
    :members:
 
 .. autoclass:: touch
