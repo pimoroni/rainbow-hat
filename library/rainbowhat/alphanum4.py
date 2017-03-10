@@ -200,7 +200,7 @@ class AlphaNum4(HT16K33.HT16K33):
         """
 
         # Calculate length of value without decimals.
-        length = len(str(value).split('.')[0])
+        length = len(str(value).replace(".",""))
         # Error if value without decimals is longer than 4 characters.
         if length > 4:
             self.print_str('----')
