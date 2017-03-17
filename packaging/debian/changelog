@@ -1,3 +1,9 @@
+rainbowhat (0.0.2) STABLE; urgency=low
+
+  * Bugfix: Fixed length calculation in print_number_str
+
+ -- Phil Howard <phil@pimoroni.com>  Fri, 17 Mar 2017 00:00:00 +0000
+
 rainbowhat (0.0.1) STABLE; urgency=low
 
   * Initial release

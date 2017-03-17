@@ -1,3 +1,8 @@
+0.0.2
+-----
+
+* Bugfix: Fixed length calculation in print_number_str
+
 0.0.1
 -----
 

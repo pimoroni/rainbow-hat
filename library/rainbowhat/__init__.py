@@ -7,7 +7,7 @@ from .lights import Lights
 from . import buzzer
 
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 display = AlphaNum4(i2c=bus)
 display.begin()
