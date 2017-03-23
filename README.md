@@ -17,7 +17,39 @@ We've created a super-easy installation script that will install all pre-requisi
 In the new terminal window type:
 
 ```bash
-curl -sS https://get.pimoroni.com/rainbowhat | bash
+curl https://get.pimoroni.com/rainbowhat | bash
 ```
 
 If you choose to download examples you'll find them in `/home/pi/Pimoroni/rainbowhat`.
+
+**Library install for Python 3:**
+
+on Raspbian:
+
+```bash
+sudo apt-get install python3-rainbowhat
+```
+other environments: 
+
+```bash
+sudo pip3 install rainbowhat
+```
+
+**Library install for Python 2:**
+
+on Raspbian:
+
+```bash
+sudo apt-get install python-rainbowhat
+```
+other environments: 
+
+```bash
+sudo pip2 install rainbowhat
+```
+
+## Documentation & Support
+
+Getting started - http://learn.pimoroni.com/tutorial/sandyj/getting-started-with-rainbow-hat-in-python
+GPIO Pinout - https://pinout.xyz/pinout/rainbow_hat
+Get help - http://forums.pimoroni.com/c/support
