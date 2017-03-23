@@ -6,7 +6,7 @@ This repository contains the Pimoroni Python driver for Rainbow HAT, for use wit
 
 For the official AndroidThings driver see: https://github.com/androidthings/contrib-drivers/tree/master/rainbowhat
 
-##Installation
+## Installation
 
 **Full install ( recommended ):**
 
