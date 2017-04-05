@@ -1,4 +1,4 @@
-#Examples from Blinkt!
+# Examples from Blinkt!
 
 The examples in this folder have been ported from Blinkt! repository:
 
@@ -8,9 +8,8 @@ has been used to port with minimal modification the existing example:
 
 	import rainbowhat
 	
-	set_clear_on_exit=rainbowhat.rainbow.set_clear_on_exit
-	set_pixel=rainbowhat.rainbow.set_pixel
-	show=rainbowhat.rainbow.show
-	set_brightness=rainbowhat.rainbow.set_brightness
-	# Add any required alias function from blinkt
-
+	set_clear_on_exit=rainbowhat.rainbow.set_clear_on_exit  
+	set_pixel=rainbowhat.rainbow.set_pixel  
+	show=rainbowhat.rainbow.show  
+	set_brightness=rainbowhat.rainbow.set_brightness  
+	# Add any required alias function from blinkt  
