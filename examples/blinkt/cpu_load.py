@@ -19,13 +19,15 @@ set_brightness=rainbowhat.rainbow.set_brightness
 set_clear_on_exit()
 
 def show_graph(v, r, g, b):
-    v *= 8
+    v *= 7
     for x in range(7):
         if v  < 0:
             r, g, b = 0, 0, 0
         else:
             r, g, b = [int(min(v,1.0) * c) for c in [r,g,b]]
+
         set_pixel(x, r, g, b)
+
         v -= 1
 
     show()
