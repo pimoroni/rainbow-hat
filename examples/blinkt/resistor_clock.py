@@ -32,17 +32,17 @@ while True:
 
     r, g, b = colours[hourten]
     blinkt.set_pixel(6,r,g,b)
-    blinkt.set_pixel(5,r,g,b)
 
     r, g, b = colours[hourunit]
+    blinkt.set_pixel(5,r,g,b)
     blinkt.set_pixel(4,r,g,b)
-    blinkt.set_pixel(3,r,g,b)
 
     r, g, b = colours[minuteten]
+    blinkt.set_pixel(3,r,g,b)
     blinkt.set_pixel(2,r,g,b)
-    blinkt.set_pixel(1,r,g,b)
 
     r, g, b = colours[minuteunit]
+    blinkt.set_pixel(1,r,g,b)
     blinkt.set_pixel(0,r,g,b)
 
     blinkt.show()
