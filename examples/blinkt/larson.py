@@ -21,7 +21,7 @@ while True:
     # Triangle wave, a snappy ping-pong effect
     offset = int(abs((delta % 16) - 8))
 
-    for i in range(blinkt.NUM_PIXEL):
+    for i in range(blinkt.NUM_PIXELS):
         blinkt.set_pixel(i , reds[offset + i], 0, 0)
     blinkt.show()
 
