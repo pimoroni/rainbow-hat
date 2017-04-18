@@ -15,9 +15,10 @@ from rainbowhat import rainbow as blinkt
 blinkt.set_clear_on_exit()
 
 def make_gaussian(fwhm):
+    half = (blinkt.NUM_PIXELS-1)/2
     x = np.arange(0, blinkt.NUM_PIXELS, 1, float)
     y = x[:, np.newaxis]
-    x0, y0 = 3.5, 3.5
+    x0, y0 = half, half
     fwhm = fwhm
     gauss = np.exp(-4 * np.log(2) * ((x - x0) ** 2 + (y - y0) ** 2) / fwhm ** 2)
     return gauss
