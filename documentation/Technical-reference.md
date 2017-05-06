@@ -23,7 +23,7 @@ The rainbow arc consists of 7 APA102 RGB pixels numbered 0 to 6 from right to le
 Function | GPIO Pin
 ---------|---------
 Clock    | BCM#11
-Data     | BCM#19
+Data     | BCM#10
 Chip-Sel | BCM#8
 
 It's a write-only device requiring a 37 byte update transaction.
