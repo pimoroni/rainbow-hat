@@ -2,12 +2,24 @@
 
 import math
 import time
+from subprocess import PIPE, Popen
 
 #import blinkt
 from rainbowhat import rainbow as blinkt
 
-
 blinkt.set_clear_on_exit()
+
+def get_cpu_temperature():
+    process = Popen(['vcgencmd', 'measure_temp'], stdout=PIPE)
+    output, _error = process.communicate()
+    output = output.decode()
+
+    pos_start = output.index('=') + 1
+    pos_end = output.rindex("'")
+
+    temp = float(output[pos_start:pos_end])
+
+    return temp
 
 def show_graph(v, r, g, b):
     v *= blinkt.NUM_PIXELS
@@ -23,12 +35,7 @@ def show_graph(v, r, g, b):
 
 blinkt.set_brightness(0.1)
 
-try:
-    while True:
-        t = time.time()
-        v = (math.sin(t) + 1) / 2 # Get a value between 0 and 1
-        show_graph(v,255,0,255)
-        time.sleep(0.01)
-
-except KeyboardInterrupt:
-    pass
+while True:
+    v = get_cpu_temperature() / 100.0
+    show_graph(v, 255, 255, 255)
+    time.sleep(0.01)

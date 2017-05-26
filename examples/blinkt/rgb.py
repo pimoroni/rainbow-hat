@@ -3,11 +3,9 @@
 import sys
 import time
 
-import rainbowhat
+#import blinkt
+from rainbowhat import rainbow as blinkt
 
-set_all=rainbowhat.rainbow.set_all
-set_clear_on_exit=rainbowhat.rainbow.set_clear_on_exit
-show=rainbowhat.rainbow.show
 
 def usage():
     print("Usage: {} <r> <g> <b>".format(sys.argv[0]))
@@ -28,8 +26,8 @@ if max(r,g,b) > 255:
 
 print("Setting Blinkt to {r},{g},{b}".format(r=r,g=g,b=b))
 
-set_clear_on_exit(False)
+blinkt.set_clear_on_exit(False)
 
-set_all(r, g, b)
+blinkt.set_all(r, g, b)
 
-show()
+blinkt.show()

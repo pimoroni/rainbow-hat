@@ -3,20 +3,17 @@
 import random
 import time
 
-import rainbowhat
+#import blinkt
+from rainbowhat import rainbow as blinkt
 
-set_clear_on_exit=rainbowhat.rainbow.set_clear_on_exit
-set_pixel=rainbowhat.rainbow.set_pixel
-show=rainbowhat.rainbow.show
-
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
 while True:
-    pixels = random.sample(range(7), random.randint(1, 5))
-    for i in range(7):
+    pixels = random.sample(range(blinkt.NUM_PIXELS), random.randint(1, 5))
+    for i in range(blinkt.NUM_PIXELS):
         if i in pixels:
-            set_pixel(i, 255, 150, 0)
+            blinkt.set_pixel(i, 255, 150, 0)
         else:
-            set_pixel(i, 0, 0, 0)
-    show()
+            blinkt.set_pixel(i, 0, 0, 0)
+    blinkt.show()
     time.sleep(0.05)

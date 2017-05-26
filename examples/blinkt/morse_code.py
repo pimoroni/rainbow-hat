@@ -2,19 +2,16 @@
 
 import time
 
-import rainbowhat
+#import blinkt
+from rainbowhat import rainbow as blinkt
 
-set_clear_on_exit=rainbowhat.rainbow.set_clear_on_exit
-set_pixel=rainbowhat.rainbow.set_pixel
-show=rainbowhat.rainbow.show
-
-set_clear_on_exit()
+blinkt.set_clear_on_exit()
 
 def show_all(state):
-    for i in range(7):
+    for i in range(blinkt.NUM_PIXELS):
         val = state * 255
-        set_pixel(i, val, val, val)
-    show()
+        blinkt.set_pixel(i, val, val, val)
+    blinkt.show()
 
 def dot():
     show_all(1)
