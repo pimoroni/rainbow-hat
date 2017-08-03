@@ -195,6 +195,7 @@ class bmp280:
         var1=self.dig_P9*press*press/2147483648.0 # formula for pressure from datasheet
         var2=press*self.dig_P8/32768.0 # formula for pressure from datasheet
         press=press+(var1+var2+self.dig_P7)/16.0 # formula for pressure from datasheet
+        press/=100 # convert to hPa
 
         self._temperature = temp
         self._pressure = press

@@ -216,7 +216,7 @@ class AlphaNum4(HT16K33.HT16K33):
                 self.set_digit(pos, ch)
                 pos += 1
 
-    def print_float(self, value, decimal_digits=2, justify_right=True):
+    def print_float(self, value, justify_right=True):
         """Print a numeric value to the display.
 
         If value is negative it will be printed with a leading minus sign.
@@ -224,8 +224,10 @@ class AlphaNum4(HT16K33.HT16K33):
 
         """
 
+        decimal_digits = 4 - len(str(int(value)))
         format_string = '{{0:0.{0}F}}'.format(decimal_digits)
         self.print_number_str(format_string.format(value), justify_right)
+        
 
     def print_hex(self, value, justify_right=True):
         """Print a numeric value in hexadecimal.
