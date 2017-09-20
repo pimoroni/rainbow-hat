@@ -1,7 +1,7 @@
 try:
     import RPi.GPIO as GPIO
 except ImportError:
-    exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
+    raise ImportError("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
 
 
 RED = 6
