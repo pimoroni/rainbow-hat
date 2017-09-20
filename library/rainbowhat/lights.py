@@ -11,8 +11,9 @@ BLUE = 26
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-class Light:
+class Light(object):
     def __init__(self, gpio_pin):
+        object.__init__(object)
         self._gpio_pin = gpio_pin
         self.state = False
         GPIO.setup(self._gpio_pin, GPIO.OUT, initial=GPIO.LOW)
@@ -42,7 +43,7 @@ class Light:
         self.state = GPIO.HIGH if value else GPIO.LOW
         GPIO.output(self._gpio_pin, self.state)
 
-class Lights:
+class Lights(object):
     red = Light(RED)
     green = Light(GREEN)
     blue = Light(BLUE)

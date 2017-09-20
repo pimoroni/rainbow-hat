@@ -90,8 +90,10 @@ class signed_int(int):
             number -= 1 << bits
         return int.__new__(self, number)
 
-class bmp280:
+class bmp280(object):
     def __init__(self, i2c_bus=None, addr=ADDR):
+        object.__init__(self)
+
         self._temperature = 0
         self._pressure = 0
 

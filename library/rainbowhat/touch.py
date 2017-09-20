@@ -11,8 +11,9 @@ PIN_C = 16
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-class Button:
+class Button(object):
     def __init__(self, index, gpio_pin):
+        object.__init__(self)
         self.pressed = False
         self._on_press_handler = None
         self._on_release_handler = None
@@ -58,7 +59,7 @@ class Button:
 
         self._on_release_handler = handler
 
-class Buttons:
+class Buttons(object):
     A = Button(0, PIN_A)
     B = Button(1, PIN_B)
     C = Button(2, PIN_C)
