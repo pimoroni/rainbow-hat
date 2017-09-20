@@ -36,7 +36,7 @@ while True:
 
     hue %= 360
     rainbowhat.display.clear()
-    rainbowhat.display.print_float(round(hue,1), decimal_digits=1)
+    rainbowhat.display.print_float(round(hue,1))
     rainbowhat.display.show()
 
     r, g, b = [int(c * 255) for c in colorsys.hsv_to_rgb(hue / 360.0, 1.0, 1.0)]
