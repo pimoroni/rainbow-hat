@@ -14,9 +14,9 @@ GPIO.setwarnings(False)
 class Light(object):
     def __init__(self, gpio_pin):
         object.__init__(object)
+        self._is_setup = False
         self._gpio_pin = gpio_pin
         self.state = False
-        GPIO.setup(self._gpio_pin, GPIO.OUT, initial=GPIO.LOW)
 
     def on(self):
         """Turn the light on."""
@@ -39,6 +39,10 @@ class Light(object):
         :param value: Either True or False to turn light on or off/
 
         """
+
+        if not self._is_setup:
+            GPIO.setup(self._gpio_pin, GPIO.OUT, initial=GPIO.LOW)
+            self._is_setup = True
 
         self.state = GPIO.HIGH if value else GPIO.LOW
         GPIO.output(self._gpio_pin, self.state)

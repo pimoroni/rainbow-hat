@@ -19,8 +19,15 @@ class Button(object):
         self._on_release_handler = None
         self._gpio_pin = gpio_pin
         self._index = index
+        self._is_setup = False
+
+    def setup(self):
+        if self._is_setup:
+            return
+
         GPIO.setup(self._gpio_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.add_event_detect(self._gpio_pin, GPIO.BOTH, bouncetime=1, callback=self._handle_button)
+        self._is_setup = True
 
     def _handle_button(self, pin):
         self.pressed = GPIO.input(pin) != GPIO.HIGH
@@ -40,6 +47,8 @@ class Button(object):
     def press(self, handler=None):
         """Bind a function to handle touch press."""
 
+        self.setup()
+
         if handler is None:
             def decorate(handler):
                 self._on_press_handler = handler
@@ -50,6 +59,8 @@ class Button(object):
 
     def release(self, handler=None):
         """Bind a funciton to handle touch release."""
+
+        self.setup()
 
         if handler is None:
             def decorate(handler):
