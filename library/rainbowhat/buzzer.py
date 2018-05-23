@@ -3,25 +3,37 @@ from threading import Timer
 try:
     import RPi.GPIO as GPIO
 except ImportError:
-    exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
+    raise ImportError("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
 
 
 BUZZER = 13
 
 _timeout = None
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup(BUZZER, GPIO.OUT)
+_is_setup = False
 
-# Set up the PWM and then set the pin to input
-# to prevent the signal from being output.
-# Since starting/stopping PWM causes a segfault,
-# this is the only way to manage the buzzer.
+pwm = None
 
-pwm = GPIO.PWM(BUZZER, 1)
-GPIO.setup(BUZZER, GPIO.IN)
-pwm.start(50)
+def setup():
+    global _is_setup, pwm
+
+    if _is_setup:
+        return
+
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    GPIO.setup(BUZZER, GPIO.OUT)
+
+    # Set up the PWM and then set the pin to input
+    # to prevent the signal from being output.
+    # Since starting/stopping PWM causes a segfault,
+    # this is the only way to manage the buzzer.
+
+    pwm = GPIO.PWM(BUZZER, 1)
+    GPIO.setup(BUZZER, GPIO.IN)
+    pwm.start(50)
+
+    _is_setup = True
 
 def note(frequency, duration=1.0):
     """Play a single note.
@@ -32,6 +44,8 @@ def note(frequency, duration=1.0):
     """
 
     global _timeout
+
+    setup()
 
     if frequency <= 0:
         raise ValueError("Frequency must be > 0")

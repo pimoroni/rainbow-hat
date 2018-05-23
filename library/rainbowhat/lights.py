@@ -1,7 +1,7 @@
 try:
     import RPi.GPIO as GPIO
 except ImportError:
-    exit("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
+    raise ImportError("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
 
 
 RED = 6
@@ -11,11 +11,12 @@ BLUE = 26
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-class Light:
+class Light(object):
     def __init__(self, gpio_pin):
+        object.__init__(object)
+        self._is_setup = False
         self._gpio_pin = gpio_pin
         self.state = False
-        GPIO.setup(self._gpio_pin, GPIO.OUT, initial=GPIO.LOW)
 
     def on(self):
         """Turn the light on."""
@@ -39,10 +40,14 @@ class Light:
 
         """
 
+        if not self._is_setup:
+            GPIO.setup(self._gpio_pin, GPIO.OUT, initial=GPIO.LOW)
+            self._is_setup = True
+
         self.state = GPIO.HIGH if value else GPIO.LOW
         GPIO.output(self._gpio_pin, self.state)
 
-class Lights:
+class Lights(object):
     red = Light(RED)
     green = Light(GREEN)
     blue = Light(BLUE)

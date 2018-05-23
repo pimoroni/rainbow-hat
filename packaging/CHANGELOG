@@ -1,3 +1,12 @@
+rainbowhat (0.1.0) STABLE; urgency=low
+
+  * Change: Pressure readings now output as hPa rather than Pa
+  * Change: Removed hard calls to exit() to fix behaviour in IDLE
+  * Change: Defer device setup until methods are called
+  * Fix: Added delay to APA102 output to fix instability under high load
+
+ -- Phil Howard <phil@pimoroni.com>  Wed, 23 May 2018 00:00:00 +0000
+
 rainbowhat (0.0.2) STABLE; urgency=low
 
   * Bugfix: Fixed length calculation in print_number_str
