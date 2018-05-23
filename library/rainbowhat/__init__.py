@@ -1,5 +1,5 @@
 
-__version__ = '0.0.2'
+__version__ = '0.1.0'
 
 from . import apa102
 from .bmp280 import bmp280

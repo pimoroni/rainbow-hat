@@ -20,7 +20,7 @@ pre-requisites and get your Rainbow HAT up and running in a jiffy. To
 run it fire up Terminal which you'll find in Menu -> Accessories ->
 Terminal on your Raspberry Pi desktop like so:
 
-.. figure:: terminal.jpg
+.. figure:: https://github.com/pimoroni/rainbow-hat/raw/master/terminal.jpg
    :alt: Finding the terminal
 
 In the new terminal window type:
