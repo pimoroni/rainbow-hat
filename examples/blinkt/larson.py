@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-import math
 import time
 
-#import blinkt
+# import blinkt
 from rainbowhat import rainbow as blinkt
 
 blinkt.set_clear_on_exit()
@@ -22,7 +21,8 @@ while True:
     offset = int(abs((delta % 16) - 8))
 
     for i in range(blinkt.NUM_PIXELS):
-        blinkt.set_pixel(i , reds[offset + i], 0, 0)
+        blinkt.set_pixel(i, reds[offset + i], 0, 0)
+
     blinkt.show()
 
     time.sleep(0.1)

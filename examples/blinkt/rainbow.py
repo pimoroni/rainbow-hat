@@ -3,7 +3,7 @@
 import colorsys
 import time
 
-#import blinkt
+# import blinkt
 from rainbowhat import rainbow as blinkt
 
 spacing = 360.0 / 16.0
@@ -17,7 +17,8 @@ while True:
     for x in range(blinkt.NUM_PIXELS):
         offset = x * spacing
         h = ((hue + offset) % 360) / 360.0
-        r, g, b = [int(c*255) for c in colorsys.hsv_to_rgb(h, 1.0, 1.0)]
-        blinkt.set_pixel(x,r,g,b)
+        r, g, b = [int(c * 255) for c in colorsys.hsv_to_rgb(h, 1.0, 1.0)]
+        blinkt.set_pixel(x, r, g, b)
+
     blinkt.show()
     time.sleep(0.001)
