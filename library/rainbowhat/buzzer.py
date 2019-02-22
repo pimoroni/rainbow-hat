@@ -1,9 +1,11 @@
+"""Rainbow HAT Piezo Buzzer."""
 from threading import Timer
 
 try:
     import RPi.GPIO as GPIO
 except ImportError:
-    raise ImportError("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
+    raise ImportError("""This library requires the RPi.GPIO module.
+Install with: sudo pip install RPi.GPIO""")
 
 
 BUZZER = 13
@@ -14,7 +16,9 @@ _is_setup = False
 
 pwm = None
 
+
 def setup():
+    """Setup piezo buzzer."""
     global _is_setup, pwm
 
     if _is_setup:
@@ -35,6 +39,7 @@ def setup():
 
     _is_setup = True
 
+
 def note(frequency, duration=1.0):
     """Play a single note.
 
@@ -42,7 +47,6 @@ def note(frequency, duration=1.0):
     :param duration: Optional duration in seconds, use None to sustain note
 
     """
-
     global _timeout
 
     setup()
@@ -56,11 +60,12 @@ def note(frequency, duration=1.0):
     clear_timeout()
 
     pwm.ChangeFrequency(frequency)
-    GPIO.setup(BUZZER, GPIO.OUT)    
+    GPIO.setup(BUZZER, GPIO.OUT)
 
     if duration is not None and duration > 0:
         _timeout = Timer(duration, stop)
         _timeout.start()
+
 
 def midi_note(note_number, duration=1.0):
     """Play a single note by MIDI note number.
@@ -71,10 +76,10 @@ def midi_note(note_number, duration=1.0):
     :param duration: Optional duration in seconds, use None to sustain note
 
     """
-
-    freq = (2**((note_number-69.0)/12)) * 440
+    freq = (2 ** ((note_number - 69.0) / 12)) * 440
 
     note(freq, duration)
+
 
 def clear_timeout():
     """Clear any note timeout set.
@@ -82,12 +87,12 @@ def clear_timeout():
     Will cause any pending playing note to be sustained.
 
     """
-
     global _timeout
 
     if _timeout is not None:
         _timeout.cancel()
         _timeout = None
+
 
 def stop():
     """Stop buzzer.
@@ -95,8 +100,6 @@ def stop():
     Immediately silences the buzzer.
 
     """
-
     clear_timeout()
 
     GPIO.setup(BUZZER, GPIO.IN)
-

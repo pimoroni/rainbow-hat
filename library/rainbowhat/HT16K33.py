@@ -22,16 +22,16 @@ from __future__ import division
 
 
 # Constants
-DEFAULT_ADDRESS             = 0x70
-HT16K33_BLINK_CMD           = 0x80
-HT16K33_BLINK_DISPLAYON     = 0x01
-HT16K33_BLINK_OFF           = 0x00
-HT16K33_BLINK_2HZ           = 0x02
-HT16K33_BLINK_1HZ           = 0x04
-HT16K33_BLINK_HALFHZ        = 0x06
-HT16K33_SYSTEM_SETUP        = 0x20
-HT16K33_OSCILLATOR          = 0x01
-HT16K33_CMD_BRIGHTNESS      = 0xE0
+DEFAULT_ADDRESS = 0x70
+HT16K33_BLINK_CMD = 0x80
+HT16K33_BLINK_DISPLAYON = 0x01
+HT16K33_BLINK_OFF = 0x00
+HT16K33_BLINK_2HZ = 0x02
+HT16K33_BLINK_1HZ = 0x04
+HT16K33_BLINK_HALFHZ = 0x06
+HT16K33_SYSTEM_SETUP = 0x20
+HT16K33_OSCILLATOR = 0x01
+HT16K33_CMD_BRIGHTNESS = 0xE0
 
 
 class HT16K33(object):
@@ -44,7 +44,7 @@ class HT16K33(object):
         """
         self._i2c_addr = address
         self._device = i2c
-        self.buffer = bytearray([0]*16)
+        self.buffer = bytearray([0] * 16)
         self._is_setup = False
 
     def begin(self):
@@ -59,14 +59,14 @@ class HT16K33(object):
     def set_blink(self, frequency):
         """Blink display at specified frequency.
 
-        Note that frequency must be a value allowed by the HT16K33, specifically one of: 
+        Note that frequency must be a value allowed by the HT16K33, specifically one of:
+
          * HT16K33_BLINK_OFF,
          * HT16K33_BLINK_2HZ,
          * HT16K33_BLINK_1HZ, or
          * HT16K33_BLINK_HALFHZ.
 
         """
-
         if frequency not in [HT16K33_BLINK_OFF, HT16K33_BLINK_2HZ,
                              HT16K33_BLINK_1HZ, HT16K33_BLINK_HALFHZ]:
             raise ValueError('Frequency must be one of HT16K33_BLINK_OFF, HT16K33_BLINK_2HZ, HT16K33_BLINK_1HZ, or HT16K33_BLINK_HALFHZ.')
@@ -83,7 +83,7 @@ class HT16K33(object):
         self._device.write_i2c_block_data(self._i2c_addr, HT16K33_CMD_BRIGHTNESS | brightness, [])
 
     def set_led(self, led, value):
-        """Sets specified LED (value of 0 to 127) to the specified value.
+        """Set specified LED (value of 0 to 127) to the specified value.
 
         0/False for off and 1 (or any True/non-zero value) for on.
 
@@ -93,6 +93,7 @@ class HT16K33(object):
         # Calculate position in byte buffer and bit offset of desired LED.
         pos = led // 8
         offset = led % 8
+
         if not value:
             # Turn off the specified LED (set bit to zero).
             self.buffer[pos] &= ~(1 << offset)
@@ -102,7 +103,6 @@ class HT16K33(object):
 
     def write_display(self):
         """Write display buffer to display hardware."""
-
         if not self._is_setup:
             self.begin()
             self._is_setup = True
@@ -114,4 +114,3 @@ class HT16K33(object):
         """Clear contents of display buffer."""
         for i, value in enumerate(self.buffer):
             self.buffer[i] = 0
-

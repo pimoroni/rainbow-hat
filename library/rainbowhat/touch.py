@@ -1,7 +1,9 @@
+"""Rainbow HAT GPIO Touch Driver."""
 try:
     import RPi.GPIO as GPIO
 except ImportError:
-    raise ImportError("This library requires the RPi.GPIO module\nInstall with: sudo pip install RPi.GPIO")
+    raise ImportError("""This library requires the RPi.GPIO module.
+Install with: sudo pip install RPi.GPIO""")
 
 
 PIN_A = 21
@@ -11,8 +13,12 @@ PIN_C = 16
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
+
 class Button(object):
+    """Represent GPIO Button."""
+
     def __init__(self, index, gpio_pin):
+        """Initialise GPIO Button."""
         object.__init__(self)
         self.pressed = False
         self._on_press_handler = None
@@ -22,6 +28,7 @@ class Button(object):
         self._is_setup = False
 
     def setup(self):
+        """Set up the GPIO button."""
         if self._is_setup:
             return
 
@@ -46,7 +53,6 @@ class Button(object):
 
     def press(self, handler=None):
         """Bind a function to handle touch press."""
-
         self.setup()
 
         if handler is None:
@@ -59,7 +65,6 @@ class Button(object):
 
     def release(self, handler=None):
         """Bind a funciton to handle touch release."""
-
         self.setup()
 
         if handler is None:
@@ -70,7 +75,10 @@ class Button(object):
 
         self._on_release_handler = handler
 
+
 class Buttons(object):
+    """Represent A, B and C GPIO Buttons."""
+
     A = Button(0, PIN_A)
     B = Button(1, PIN_B)
     C = Button(2, PIN_C)
@@ -81,6 +89,7 @@ class Buttons(object):
         return self._all[key]
 
     def press(self, handler=None):
+        """Bind a function to handle touch press."""
         if handler is None:
             def decorate(handler):
                 self.A.press(handler)
@@ -94,6 +103,7 @@ class Buttons(object):
         self.C.press(handler)
 
     def release(self, handler=None):
+        """Bind a function to handle touch release."""
         if handler is None:
             def decorate(handler):
                 self.A.release(handler)
@@ -108,4 +118,3 @@ class Buttons(object):
 
 
 Buttons = Buttons()
-
