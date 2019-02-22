@@ -165,7 +165,8 @@ class bmp280(object):
                 self._write_byte(REGISTER_CONFIG, CONFIG)
                 time.sleep(0.2)
 
-                self.dig_T1 = self._read_unsigned_word(REGISTER_DIG_T1)  # read correction settings
+                # read compensation settings
+                self.dig_T1 = self._read_unsigned_word(REGISTER_DIG_T1)
                 self.dig_T2 = self._read_signed_word(REGISTER_DIG_T2)
                 self.dig_T3 = self._read_signed_word(REGISTER_DIG_T3)
                 self.dig_P1 = self._read_unsigned_word(REGISTER_DIG_P1)
@@ -177,25 +178,31 @@ class bmp280(object):
                 self.dig_P7 = self._read_signed_word(REGISTER_DIG_P7)
                 self.dig_P8 = self._read_signed_word(REGISTER_DIG_P8)
                 self.dig_P9 = self._read_signed_word(REGISTER_DIG_P9)
+
             else:
                 raise IOError("bmp280 not found on address {:x}".format(self.addr))
 
             self._is_setup = True
 
-        raw_temp_msb = self._read_byte(REGISTER_TEMPDATA_MSB)      # read raw temperature msb
-        raw_temp_lsb = self._read_byte(REGISTER_TEMPDATA_LSB)      # read raw temperature lsb
-        raw_temp_xlsb = self._read_byte(REGISTER_TEMPDATA_XLSB)    # read raw temperature xlsb
-        raw_press_msb = self._read_byte(REGISTER_PRESSDATA_MSB)    # read raw pressure msb
-        raw_press_lsb = self._read_byte(REGISTER_PRESSDATA_LSB)    # read raw pressure lsb
-        raw_press_xlsb = self._read_byte(REGISTER_PRESSDATA_XLSB)  # read raw pressure xlsb
+        raw_temp_msb = self._read_byte(REGISTER_TEMPDATA_MSB)
+        raw_temp_lsb = self._read_byte(REGISTER_TEMPDATA_LSB)
+        raw_temp_xlsb = self._read_byte(REGISTER_TEMPDATA_XLSB)
+        raw_press_msb = self._read_byte(REGISTER_PRESSDATA_MSB)
+        raw_press_lsb = self._read_byte(REGISTER_PRESSDATA_LSB)
+        raw_press_xlsb = self._read_byte(REGISTER_PRESSDATA_XLSB)
 
-        raw_temp = (raw_temp_msb << 12) + (raw_temp_lsb << 4) + (raw_temp_xlsb >> 4)  # combine 3 bytes  msb 12 bits left, lsb 4 bits left, xlsb 4 bits right
-        raw_press = (raw_press_msb << 12) + (raw_press_lsb << 4) + (raw_press_xlsb >> 4)  # combine 3 bytes  msb 12 bits left, lsb 4 bits left, xlsb 4 bits right
+        # combine 3 bytes  msb 12 bits left, lsb 4 bits left, xlsb 4 bits right
+        raw_temp = (raw_temp_msb << 12) + (raw_temp_lsb << 4) + (raw_temp_xlsb >> 4)
+
+        # combine 3 bytes  msb 12 bits left, lsb 4 bits left, xlsb 4 bits right
+        raw_press = (raw_press_msb << 12) + (raw_press_lsb << 4) + (raw_press_xlsb >> 4)
 
         var1 = (raw_temp / 16384.0 - self.dig_T1 / 1024.0) * self.dig_T2
         var2 = (raw_temp / 131072.0 - self.dig_T1 / 8192.0) * (raw_temp / 131072.0 - self.dig_T1 / 8192.0) * self.dig_T3
         temp = (var1 + var2) / 5120.0
-        t_fine = (var1 + var2)  # store fine temperature for pressure calculation
+
+        # store fine temperature for pressure calculation
+        t_fine = (var1 + var2)
 
         var1 = t_fine / 2.0 - 64000.0
         var2 = var1 * var1 * self.dig_P6 / 32768.0
