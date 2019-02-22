@@ -3,7 +3,7 @@
 import random
 import time
 
-#import blinkt
+# import blinkt
 from rainbowhat import rainbow as blinkt
 
 blinkt.set_clear_on_exit()
