@@ -18,3 +18,4 @@ rainbowhat.rainbow.show()
 time.sleep(1)
 
 # continue the pattern to add the other colours of the rainbow 
+
