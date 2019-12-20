@@ -9,8 +9,8 @@ import signal
 @rainbowhat.touch.A.press()
 def touch_a(channel):
 
-# this time we make the buzzer sound
-# as well as making the button light come on
+    # this time we make the buzzer sound
+    # as well as making the button light come on
     rainbowhat.lights.rgb(1, 0, 0)
     rainbowhat.buzzer.midi_note(65, 1)
 
@@ -26,5 +26,7 @@ def touch_b(channel):
 def release(channel):
     rainbowhat.lights.rgb(0, 0, 0)
 
+    
 # waits until a signal is received
 signal.pause()
+
