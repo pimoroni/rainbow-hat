@@ -26,7 +26,6 @@ def touch_b(channel):
 def release(channel):
     rainbowhat.lights.rgb(0, 0, 0)
 
-    
+
 # waits until a signal is received
 signal.pause()
-

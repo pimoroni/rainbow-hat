@@ -17,5 +17,4 @@ rainbowhat.rainbow.set_pixel(4, 255, 255, 0, 0.1)
 rainbowhat.rainbow.show()
 time.sleep(1)
 
-# continue the pattern to add the other colours of the rainbow 
-
+# continue the pattern to add the other colours of the rainbow
