@@ -218,7 +218,10 @@ class AlphaNum4(HT16K33.HT16K33):
         Decimal digits is the desired number of digits after the decimal point.
 
         """
-        decimal_digits = 4 - len(str(int(value)))
+         if value < 0 and value > -1:
+ 38         decimal_digits = 3 - len(str(int(value)))
+ 39      else:
+            decimal_digits = 4 - len(str(int(value)))
         format_string = '{{0:0.{0}F}}'.format(decimal_digits)
         self.print_number_str(format_string.format(value), justify_right)
 
