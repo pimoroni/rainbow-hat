@@ -53,3 +53,7 @@ sudo pip2 install rainbowhat
 Getting started - http://learn.pimoroni.com/tutorial/sandyj/getting-started-with-rainbow-hat-in-python  
 GPIO Pinout - https://pinout.xyz/pinout/rainbow_hat  
 Get help - http://forums.pimoroni.com/c/support  
+
+## Community Links
+
+* Control Rainbow HAT from the web with Anvil - [https://anvil.works/articles/pimoroni-rainbow-hat](https://anvil.works/articles/pimoroni-rainbow-hat?utm_source=pimoroni)
